@@ -6,7 +6,7 @@ class Statistik extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(18, 10, 18, 0),
+      margin: EdgeInsets.fromLTRB(5, 0, 18, 0),
       width: double.infinity,
       height: 153,
       child: GestureDetector(
