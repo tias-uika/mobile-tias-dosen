@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
                 children: [
                   User(),
                   DataCv(),
-                  Menus(),
+                  Menu(),
                   Statistik(),
                   Leaderboard(),
                   UpdateTerbaru(),
