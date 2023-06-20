@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tias/theme.dart';
 
 class User extends StatelessWidget {
   @override
@@ -12,13 +11,18 @@ class User extends StatelessWidget {
           RichText(
             text: TextSpan(
               text: "Halo, ",
-              style: SFregular,
+              style: TextStyle(
+                  fontFamily: 'SF-Pro-Display',
+                  fontSize: 15,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700),
               children: <TextSpan>[
                 TextSpan(
                     text: "fitrah satrya fajar",
                     style: TextStyle(
                         fontFamily: 'SF-Pro-Display',
                         fontSize: 15,
+                        color: Colors.white,
                         fontWeight: FontWeight.w700))
               ],
             ),

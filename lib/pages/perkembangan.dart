@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
-class Perkembangan extends StatelessWidget {
+class Perkembangan extends StatefulWidget {
+  const Perkembangan({super.key});
+
+  @override
+  State<Perkembangan> createState() => _PerkembanganState();
+}
+
+class _PerkembanganState extends State<Perkembangan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Perkembangan"),
+        title: Text('Statistik'),
       ),
     );
   }

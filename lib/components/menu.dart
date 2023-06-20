@@ -1,22 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:tias/pages/artikel.dart';
-import 'package:tias/pages/aturformat.dart';
-import 'package:tias/pages/dokumen.dart';
-import 'package:tias/pages/kompetensi.dart';
-import 'package:tias/pages/kualifikasi.dart';
-import 'package:tias/pages/pendidikan.dart';
-import 'package:tias/pages/penelitian.dart';
-import 'package:tias/pages/pengabdian.dart';
-import 'package:tias/pages/penunjang.dart';
+import 'package:tias/Pages/Artikel.dart';
+import 'package:tias/Pages/Dokumen.dart';
+import 'package:tias/Pages/Kompetensi.dart';
+import 'package:tias/Pages/Kualifikasi.dart';
+import 'package:tias/Pages/Pendidikan.dart';
+import 'package:tias/Pages/Penelitian.dart';
+import 'package:tias/Pages/Pengabdian.dart';
+import 'package:tias/Pages/Penunjang.dart';
 
-class Menus extends StatelessWidget {
+class Menu extends StatefulWidget {
+  const Menu({super.key});
+
+  @override
+  State<Menu> createState() => _MenuState();
+}
+
+class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.fromLTRB(10, 19, 0, 0),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      padding: EdgeInsets.fromLTRB(5, 19, 0, 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           Container(
-            margin: EdgeInsets.only(bottom: 20, left: 35),
+            margin: EdgeInsets.only(bottom: 20, left: 25),
             child: Text(
               "Kategori Pelaksanaan",
               style: TextStyle(
@@ -27,8 +35,9 @@ class Menus extends StatelessWidget {
             ),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(45, 6, 30, 20),
-            height: 220,
+            padding: EdgeInsets.fromLTRB(35, 6, 30, 20),
+            height: 210,
+            width: double.infinity,
             decoration: BoxDecoration(
               color: Color(0xffffffff),
             ),
@@ -328,7 +337,7 @@ class Menus extends StatelessWidget {
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        artikel()));
+                                        Artikel()));
                               },
                             ),
                             Container(
@@ -465,6 +474,8 @@ class Menus extends StatelessWidget {
               ],
             ),
           ),
-        ]));
+        ],
+      ),
+    );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tias/models/itemcardupdate.dart';
-import 'package:tias/pages/update.dart';
-import 'package:tias/theme.dart';
+import 'package:tias/pages/UpdatePage.dart';
 
 class UpdateTerbaru extends StatelessWidget {
   @override

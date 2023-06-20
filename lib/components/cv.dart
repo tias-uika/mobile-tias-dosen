@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tias/pages/aturformat.dart';
-import 'package:tias/pages/pendidikan.dart';
-import 'package:tias/theme.dart';
+//import 'package:tias/pages/aturformat.dart';
+
 import 'package:flutter/gestures.dart';
+import 'package:tias/Pages/FormatCv.dart';
 
 class DataCv extends StatelessWidget {
   @override
@@ -10,9 +10,7 @@ class DataCv extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 18, 15, 0),
       child: Container(
-        margin: EdgeInsets.only(left: 31),
-        padding: EdgeInsets.fromLTRB(18, 15, 18, 15),
-        width: 325.24,
+        width: double.infinity,
         height: 93,
         decoration: BoxDecoration(
           color: Color(0xffffffff),
@@ -26,26 +24,24 @@ class DataCv extends StatelessWidget {
           ],
         ),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              // frame113113vv (4:30)
               margin: EdgeInsets.fromLTRB(
                 0,
                 0,
                 37,
                 0,
               ),
-              width: 201,
+              width: 210,
               height: double.infinity,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     // cetakdokumenriwayathidupAVk (4:31)
                     margin: EdgeInsets.fromLTRB(
-                      0,
-                      0,
+                      18,
+                      15,
                       0,
                       14,
                     ),
@@ -62,15 +58,14 @@ class DataCv extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    // frame11309TDx (4:32)
                     width: double.infinity,
                     height: 30,
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
                           // autogroupf16ezUn (8kUoJW4ipBjkFKZbKUf16E)
-                          padding: EdgeInsets.fromLTRB(1.16, 8, 18, 6),
+                          padding: EdgeInsets.fromLTRB(18, 8, 10, 6),
                           height: double.infinity,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -90,7 +85,7 @@ class DataCv extends StatelessWidget {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (BuildContext context) =>
-                                                  FormatCV()));
+                                                  FormatCv()));
                                     },
                                   )),
                               GestureDetector(
@@ -109,7 +104,7 @@ class DataCv extends StatelessWidget {
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (BuildContext context) =>
-                                          FormatCV()));
+                                          FormatCv()));
                                 },
                               ),
                             ],
@@ -127,7 +122,7 @@ class DataCv extends StatelessWidget {
                         Container(
                           // frame113105Pk (4:37)
                           margin: EdgeInsets.fromLTRB(0, 3, 0, 3),
-                          padding: EdgeInsets.fromLTRB(16.5, 5, 18, 3),
+                          padding: EdgeInsets.fromLTRB(16.5, 5, 10, 3),
                           height: double.infinity,
                           decoration: BoxDecoration(
                             color: Color(0xff7366e3),
@@ -151,7 +146,7 @@ class DataCv extends StatelessWidget {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (BuildContext context) =>
-                                                FormatCV()));
+                                                FormatCv()));
                                   },
                                 ),
                               ),
@@ -171,7 +166,7 @@ class DataCv extends StatelessWidget {
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (BuildContext context) =>
-                                          FormatCV()));
+                                          FormatCv()));
                                 },
                               ),
                             ],
@@ -179,14 +174,14 @@ class DataCv extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
             Container(
+              margin: EdgeInsets.only(right: 18),
               // group10964oj4 (4:41)
-              width: 51.24,
-              height: 48.93,
+
               child: Image.asset(
                 ("assets/images/group-10964.png"),
                 width: 51.24,

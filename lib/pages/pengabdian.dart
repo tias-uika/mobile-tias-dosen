@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
-class Pengabdian extends StatelessWidget {
+class Pengabdian extends StatefulWidget {
+  const Pengabdian({super.key});
+
+  @override
+  State<Pengabdian> createState() => _PengabdianState();
+}
+
+class _PengabdianState extends State<Pengabdian> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Pengabdian")),
+      appBar: AppBar(
+        title: Text("Pengabdian"),
+      ),
     );
   }
 }

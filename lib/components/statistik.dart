@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:tias/pages/perkembangan.dart';
-import 'package:tias/theme.dart';
+import 'package:tias/Pages/Perkembangan.dart';
 
-class Statistik extends StatelessWidget {
+class Statistik extends StatefulWidget {
+  const Statistik({super.key});
+
+  @override
+  State<Statistik> createState() => _StatistikState();
+}
+
+class _StatistikState extends State<Statistik> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(5, 0, 18, 0),
+      margin: EdgeInsets.fromLTRB(18, 10, 18, 0),
       width: double.infinity,
       height: 153,
       child: GestureDetector(

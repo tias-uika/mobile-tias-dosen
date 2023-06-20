@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:tias/pages/login.dart';
+import 'package:tias/Pages/LoginPage.dart';
 
 // import 'package:TIAS/welcome_page.dart';
 
@@ -20,7 +20,10 @@ class _SplashScreen extends State<SplashScreen> {
     return Timer(duration, () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
+        MaterialPageRoute(
+            builder: (context) => LoginPage(
+                  title: 'hallo',
+                )),
       );
     });
   }
