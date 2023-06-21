@@ -10,6 +10,13 @@ class Dokumen extends StatefulWidget {
 }
 
 class _DokumenState extends State<Dokumen> {
+  final List<Map<String, dynamic>> _listDokumen = [
+    {
+      'Nama': 'SK JAD Fitrah',
+      'Keterangan': 'SK Jabatan Fungsional',
+      'Tanggal': 'Diunggah 23 Juli 2020'
+    },
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +31,134 @@ class _DokumenState extends State<Dokumen> {
             color: HexColor("#000000"),
             fontSize: 20,
             fontWeight: FontWeight.w700),
+      ),
+      body: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 29, horizontal: 8),
+          ),
+          // The list of products
+          Expanded(
+            child: ListView.builder(
+              itemCount: _listDokumen.length,
+              itemBuilder: (context, index) {
+                // the list item - product
+                return Container(
+                    padding: const EdgeInsets.all(20),
+                    margin:
+                        const EdgeInsets.only(bottom: 10, right: 15, left: 15),
+                    decoration: BoxDecoration(
+                      color: HexColor("6A5BE2"),
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (context) => Container(
+                            height: MediaQuery.of(context).size.height * 0.75,
+                            decoration: new BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: new BorderRadius.only(
+                                topLeft: const Radius.circular(25.0),
+                                topRight: const Radius.circular(25.0),
+                              ),
+                            ),
+                            child: Container(
+                              margin:
+                                  EdgeInsets.only(top: 50, left: 18, right: 18),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: Text('SKS Total Persubstansi'),
+                                      ),
+                                      Expanded(
+                                        child: Text(':'),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                            '${_listDokumen[index]['SKS']}'),
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            '${_listDokumen[index]['Nama']}',
+                            style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Text(
+                            '${_listDokumen[index]['Keterangan']}',
+                            style: const TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  '${_listDokumen[index]['Tanggal']}',
+                                  style: const TextStyle(
+                                      fontSize: 12.0, color: Colors.white),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(left: 7),
+                                  height: 25,
+                                  width: 75,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.grey,
+                                  ),
+                                  child: Center(
+                                      child: Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "Download",
+                                        style: TextStyle(
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white),
+                                      ),
+                                    ],
+                                  )),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ));
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
