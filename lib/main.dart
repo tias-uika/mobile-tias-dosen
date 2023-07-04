@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tias/Pages/Pendidikan.dart';
 import 'package:tias/Pages/SplashScreen.dart';
-import 'package:tias/Pages/dokumen.dart';
-import 'package:tias/components/BottomNavigator.dart';
+import 'package:tias/pages/ProfilDosen.dart';
+import 'package:tias/pages/pendidikan.dart';
+import 'package:tias/components/ProfilDosen.dart/EditProfil.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,6 +14,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: BottomNavigator());
+    return MaterialApp(home: ProfilDosen());
   }
 }
