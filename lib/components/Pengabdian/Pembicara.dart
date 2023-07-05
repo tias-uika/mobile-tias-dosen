@@ -10,6 +10,6 @@ class Pembicara extends StatefulWidget {
 class _PembicaraState extends State<Pembicara> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Scaffold();
   }
 }
