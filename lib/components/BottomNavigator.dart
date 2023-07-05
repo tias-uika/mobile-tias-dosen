@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tias/Pages/HomePage.dart';
 import 'package:tias/Pages/Rekomendasi.dart';
 import 'package:tias/Pages/Notifikasi.dart';
-import 'package:tias/Pages/Profil.dart';
+import 'package:tias/Pages/ProfilDosen.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class BottomNavigator extends StatefulWidget {
@@ -17,7 +17,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
     HomePage(),
     Rekomendasi(),
     Notifikasi(),
-    Profil(),
+    ProfilDosen(),
   ];
   int _selectedIndex = 0;
   @override
