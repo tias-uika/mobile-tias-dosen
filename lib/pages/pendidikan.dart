@@ -3,7 +3,6 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:tias/Components/Pendidikan.dart/BahanAjar.dart';
 import 'package:tias/Components/Pendidikan.dart/BimbinganMahasiswa.dart';
 import 'package:tias/Components/Pendidikan.dart/Pengajaran.dart';
-import 'package:tias/Components/Pendidikan.dart/Pengajaran.dart';
 import 'package:tias/Components/Pendidikan.dart/PengujianMahasiswa.dart';
 import 'package:tias/Components/Pendidikan.dart/TugasTambahan.dart';
 
@@ -15,6 +14,14 @@ class Pendidikan extends StatefulWidget {
 }
 
 class _PendidikanState extends State<Pendidikan> {
+  Icon cusIcon = Icon(
+    Icons.search,
+    color: Colors.black,
+  );
+  Widget cusSearchBar = Text(
+    "Pelaksanaan Pendidikan",
+    style: TextStyle(color: Colors.black),
+  );
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -26,14 +33,40 @@ class _PendidikanState extends State<Pendidikan> {
             color: Colors.black,
           ),
           backgroundColor: HexColor("#FFFFFF"),
-          title: Text(
-            "Pelaksanaan Pendidikan",
-            style: TextStyle(
-                color: Colors.black,
-                fontFamily: "SF-Pro-Display",
-                fontSize: 20,
-                fontWeight: FontWeight.w700),
-          ),
+          title: cusSearchBar,
+          actions: <Widget>[
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  if (this.cusIcon.icon == Icons.search) {
+                    this.cusIcon = Icon(
+                      Icons.cancel,
+                      color: Colors.black,
+                    );
+                    this.cusSearchBar = TextField(
+                      textInputAction: TextInputAction.go,
+                      decoration: InputDecoration(
+                        iconColor: Colors.black,
+                        border: InputBorder.none,
+                        hintText: "Search",
+                      ),
+                      style: TextStyle(color: Colors.black, fontSize: 16.0),
+                    );
+                  } else {
+                    this.cusIcon = Icon(
+                      Icons.search,
+                      color: Colors.black,
+                    );
+                    this.cusSearchBar = Text(
+                      "Pelaksanaan Pendidikan",
+                      style: TextStyle(color: Colors.black),
+                    );
+                  }
+                });
+              },
+              icon: cusIcon,
+            ),
+          ],
         ),
         body: Column(
           children: const [

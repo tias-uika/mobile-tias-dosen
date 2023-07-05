@@ -13,7 +13,6 @@ class _PengajaranState extends State<Pengajaran> {
   bool _sortKelasAscending = true;
   bool _sortSKSAscending = true;
   bool _sortNamaAscending = true;
-  SolidController _controller = SolidController();
 
   final List<Map<String, dynamic>> _listPengajaran = [
     {
@@ -117,7 +116,7 @@ class _PengajaranState extends State<Pengajaran> {
   void _sortNama(bool ascending) {
     setState(() {
       _sortNamaAscending = ascending;
-      _listPengajaran.sort((a, b) => ascending
+      _foundName.sort((a, b) => ascending
           ? a['name'].compareTo(b['name'])
           : b['name'].compareTo(a['name']));
     });
@@ -126,7 +125,7 @@ class _PengajaranState extends State<Pengajaran> {
   void _sortKelas(bool ascending) {
     setState(() {
       _sortKelasAscending = ascending;
-      _listPengajaran.sort((a, b) => ascending
+      _foundName.sort((a, b) => ascending
           ? a['kelas'].compareTo(b['kelas'])
           : b['kelas'].compareTo(a['kelas']));
     });
@@ -135,20 +134,57 @@ class _PengajaranState extends State<Pengajaran> {
   void _sortSKS(bool ascending) {
     setState(() {
       _sortSKSAscending = ascending;
-      _listPengajaran.sort((a, b) => ascending
+      _foundName.sort((a, b) => ascending
           ? a['SKS'].compareTo(b['SKS'])
           : b['SKS'].compareTo(a['SKS']));
     });
   }
 
+  List<Map<String, dynamic>> _foundName = [];
+  @override
+  initState() {
+    _foundName = _listPengajaran;
+    super.initState();
+  }
+
+  // void _runFilter(String enteredKeyword) {
+  //   List<Map<String, dynamic>> results = [];
+  //   if (enteredKeyword.isEmpty) {
+  //     // if the search field is empty or only contains white-space, we'll display all users
+  //     results = _listPengajaran;
+  //   } else {
+  //     results = _listPengajaran
+  //         .where((user) =>
+  //             user["name"].toLowerCase().contains(enteredKeyword.toLowerCase()))
+  //         .toList();
+  //     // we use the toLowerCase() method to make it case-insensitive
+  //   }
+
+  //   // Refresh the UI
+  //   setState(() {
+  //     _foundName = results;
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 29, horizontal: 8),
-            child: Row(
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            // TextField(
+            //   onChanged: (value) => _runFilter(value),
+            //   decoration: const InputDecoration(
+            //       labelText: 'Search', suffixIcon: Icon(Icons.search)),
+            // ),
+            // const SizedBox(
+            //   height: 20,
+            // ),
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 InkWell(
@@ -219,394 +255,431 @@ class _PengajaranState extends State<Pengajaran> {
                 ),
               ],
             ),
-          ),
-          // The list of products
-          Expanded(
-            child: ListView.builder(
-              itemCount: _listPengajaran.length,
-              itemBuilder: (context, index) {
-                // the list item - product
-                return Container(
-                    padding: const EdgeInsets.all(20),
-                    margin:
-                        const EdgeInsets.only(bottom: 10, right: 15, left: 15),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-                          builder: (context) => Container(
-                            height: MediaQuery.of(context).size.height * 0.75,
-                            decoration: new BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: new BorderRadius.only(
-                                topLeft: const Radius.circular(25.0),
-                                topRight: const Radius.circular(25.0),
-                              ),
-                            ),
-                            child: Container(
-                              margin:
-                                  EdgeInsets.only(top: 50, left: 18, right: 18),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text('SKS Total Persubstansi'),
+            const SizedBox(
+              height: 20,
+            ),
+            Expanded(
+              child: _foundName.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: _foundName.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: EdgeInsets.only(bottom: 24),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.grey),
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                builder: (context) => Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.85,
+                                    decoration: new BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: new BorderRadius.only(
+                                        topLeft: const Radius.circular(25.0),
+                                        topRight: const Radius.circular(25.0),
                                       ),
-                                      Expanded(
-                                        child: Text(':'),
+                                    ),
+                                    child: SingleChildScrollView(
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                            top: 30,
+                                            left: 30,
+                                            right: 18,
+                                            bottom: 20),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                      'SKS Total Persubstansi'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(':'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                      _foundName[index]['SKS']),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                      'SKS Tatap Muka Persubstansi'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(':'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                      '${_foundName[index]['SKS Tatap Muka']}'),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                      'SKS Praktek Persubstansi'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(':'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                      '${_foundName[index]['SKS Praktek']}'),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                      'SKS Praktek Lapangan Persubstansi'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(':'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                      '${_foundName[index]['SKS Praktek Lapangan']}'),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                      'SKS Simulasi Persubstansi'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(':'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                      '${_foundName[index]['SKS Simulasi']}'),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                      'Jumlah Tatap Muka Rencana'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(':'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                      '${_foundName[index]['Jumlah Tatap Muka Rencana']}'),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                      'Jumlah Tatap Muka Realisasi'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(':'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                      '${_foundName[index]['Jumlah Tatap Muka Realisasi']}'),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Expanded(
+                                                  child:
+                                                      Text('Jumlah Mahasiswa'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(':'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                      '${_foundName[index]['Jumlah Mahasiswa']}'),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Expanded(
+                                                  child:
+                                                      Text('Nama Mata Kuliah'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(':'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                      '${_foundName[index]['name']}'),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Expanded(
+                                                  child: Text('Nama Kelas'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(':'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                      '${_foundName[index]['kelas']}'),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Expanded(
+                                                  child:
+                                                      Text('Jenis Mata Kuliah'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(':'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                      '${_foundName[index]['Jenis']}'),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Expanded(
+                                                  child: Text('Jenis Evaluasi'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(':'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                      '${_foundName[index]['Jenis Evaluasi']}'),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Expanded(
+                                                  child: Text('Nama Substansi'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(':'),
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                      '${_foundName[index]['Nama Substansi']}'),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listPengajaran[index]['SKS']}'),
+                                    )),
+                              );
+                            },
+                            key: ValueKey(_foundName[index]["kelas"]),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Container(
+                                  padding: EdgeInsets.only(left: 10),
+                                  child: Row(
+                                    children: <Widget>[
+                                      CircleAvatar(
+                                          backgroundColor: HexColor("6A5BE2"),
+                                          child: Text(
+                                            '${_listPengajaran[index]['inisial']}',
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: HexColor("FFFFFF")),
+                                          )),
+                                      Container(
+                                        padding: EdgeInsets.all(20),
+                                        margin: EdgeInsets.only(left: 10),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                              _foundName[index]['name'],
+                                              style: TextStyle(
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(
+                                              '${_listPengajaran[index]['kelas']}',
+                                              style: const TextStyle(
+                                                fontFamily: 'Poppins',
+                                                fontSize: 12.0,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       )
                                     ],
                                   ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child:
-                                            Text('SKS Tatap Muka Persubstansi'),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(top: 10, left: 10),
+                                  child: Text('Mata Kuliah'),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.all(10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text(
+                                        _foundName[index]['Jenis'],
+                                        style: const TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
-                                      Expanded(
-                                        child: Text(':'),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listPengajaran[index]['SKS Tatap Muka']}'),
+                                      Container(
+                                        padding: EdgeInsets.only(left: 7),
+                                        height: 25,
+                                        width: 75,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: HexColor("6A5BE2"),
+                                        ),
+                                        child: Center(
+                                            child: Row(
+                                          children: <Widget>[
+                                            Text(
+                                              "SKS ",
+                                              style: TextStyle(
+                                                  fontFamily: 'Poppins',
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.white),
+                                            ),
+                                            Text(
+                                              '${_listPengajaran[index]['SKS']}',
+                                              style: TextStyle(
+                                                  fontFamily: 'Poppins',
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.white),
+                                            ),
+                                          ],
+                                        )),
                                       )
                                     ],
                                   ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text('SKS Praktek Persubstansi'),
-                                      ),
-                                      Expanded(
-                                        child: Text(':'),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listPengajaran[index]['SKS Praktek']}'),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                            'SKS Praktek Lapangan Persubstansi'),
-                                      ),
-                                      Expanded(
-                                        child: Text(':'),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listPengajaran[index]['SKS Praktek Lapangan']}'),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child:
-                                            Text('SKS Simulasi Persubstansi'),
-                                      ),
-                                      Expanded(
-                                        child: Text(':'),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listPengajaran[index]['SKS Simulasi']}'),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child:
-                                            Text('Jumlah Tatap Muka Rencana'),
-                                      ),
-                                      Expanded(
-                                        child: Text(':'),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listPengajaran[index]['Jumlah Tatap Muka Rencana']}'),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child:
-                                            Text('Jumlah Tatap Muka Realisasi'),
-                                      ),
-                                      Expanded(
-                                        child: Text(':'),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listPengajaran[index]['Jumlah Tatap Muka Realisasi']}'),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text('Jumlah Mahasiswa'),
-                                      ),
-                                      Expanded(
-                                        child: Text(':'),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listPengajaran[index]['Jumlah Mahasiswa']}'),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text('Nama Mata Kuliah'),
-                                      ),
-                                      Expanded(
-                                        child: Text(':'),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listPengajaran[index]['name']}'),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text('Nama Kelas'),
-                                      ),
-                                      Expanded(
-                                        child: Text(':'),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listPengajaran[index]['kelas']}'),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text('Jenis Mata Kuliah'),
-                                      ),
-                                      Expanded(
-                                        child: Text(':'),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listPengajaran[index]['Jenis']}'),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text('Jenis Evaluasi'),
-                                      ),
-                                      Expanded(
-                                        child: Text(':'),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listPengajaran[index]['Jenis Evaluasi']}'),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text('Nama Substansi'),
-                                      ),
-                                      Expanded(
-                                        child: Text(':'),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listPengajaran[index]['Nama Substansi']}'),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         );
-                      },
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Container(
-                            child: Row(
-                              children: <Widget>[
-                                CircleAvatar(
-                                    backgroundColor: HexColor("6A5BE2"),
-                                    child: Text(
-                                      '${_listPengajaran[index]['inisial']}',
-                                      style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: HexColor("FFFFFF")),
-                                    )),
-                                Container(
-                                  margin: EdgeInsets.only(left: 10),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        '${_listPengajaran[index]['name']}',
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        '${_listPengajaran[index]['kelas']}',
-                                        style: const TextStyle(
-                                          fontFamily: 'Poppins',
-                                          fontSize: 12.0,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text("Mata Kuliah :"),
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  '${_listPengajaran[index]['Jenis']}',
-                                  style: const TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(left: 7),
-                                  height: 25,
-                                  width: 75,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: HexColor("6A5BE2"),
-                                  ),
-                                  child: Center(
-                                      child: Row(
-                                    children: <Widget>[
-                                      Text(
-                                        "SKS ",
-                                        style: TextStyle(
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.white),
-                                      ),
-                                      Text(
-                                        '${_listPengajaran[index]['SKS']}',
-                                        style: TextStyle(
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.white),
-                                      ),
-                                    ],
-                                  )),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ));
-              },
+                      })
+                  : const Text(
+                      'No results found',
+                      style: TextStyle(fontSize: 24),
+                    ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tias/components/Kompetensi/Sertifikasi.dart';
+
+import '../components/Kompetensi/Tes.dart';
 
 class Kompetensi extends StatefulWidget {
   const Kompetensi({super.key});
@@ -32,7 +35,6 @@ class _KompetensiState extends State<Kompetensi> {
           body: Container(
             width: double.infinity,
             color: HexColor("#FFFFFF"),
-            padding: EdgeInsets.only(left: 12),
             child: Column(
               children: [
                 TabBar(
@@ -53,6 +55,10 @@ class _KompetensiState extends State<Kompetensi> {
                         text: ('Sertifikasi'),
                       ),
                     ]),
+                Expanded(
+                    child: TabBarView(
+                  children: [Tes(), sertifikasi()],
+                ))
               ],
             ),
           )),

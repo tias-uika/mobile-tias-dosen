@@ -54,49 +54,49 @@ class _DokumenState extends State<Dokumen> {
                     ),
                     child: InkWell(
                       onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-                          builder: (context) => Container(
-                            height: MediaQuery.of(context).size.height * 0.75,
-                            decoration: new BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: new BorderRadius.only(
-                                topLeft: const Radius.circular(25.0),
-                                topRight: const Radius.circular(25.0),
-                              ),
-                            ),
-                            child: Container(
-                              margin:
-                                  EdgeInsets.only(top: 50, left: 18, right: 18),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text('SKS Total Persubstansi'),
-                                      ),
-                                      Expanded(
-                                        child: Text(':'),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listDokumen[index]['SKS']}'),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
+                        // showModalBottomSheet(
+                        //   context: context,
+                        //   isScrollControlled: true,
+                        //   backgroundColor: Colors.transparent,
+                        //   builder: (context) => Container(
+                        //     height: MediaQuery.of(context).size.height * 0.75,
+                        //     decoration: new BoxDecoration(
+                        //       color: Colors.white,
+                        //       borderRadius: new BorderRadius.only(
+                        //         topLeft: const Radius.circular(25.0),
+                        //         topRight: const Radius.circular(25.0),
+                        //       ),
+                        //     ),
+                        //     child: Container(
+                        //       margin:
+                        //           EdgeInsets.only(top: 50, left: 18, right: 18),
+                        //       child: Column(
+                        //         mainAxisSize: MainAxisSize.min,
+                        //         children: <Widget>[
+                        //           Row(
+                        //             mainAxisAlignment: MainAxisAlignment.center,
+                        //             mainAxisSize: MainAxisSize.max,
+                        //             children: [
+                        //               Expanded(
+                        //                 child: Text('SKS Total Persubstansi'),
+                        //               ),
+                        //               Expanded(
+                        //                 child: Text(':'),
+                        //               ),
+                        //               Expanded(
+                        //                 child: Text(
+                        //                     '${_listDokumen[index]['SKS']}'),
+                        //               )
+                        //             ],
+                        //           ),
+                        //           SizedBox(
+                        //             height: 15,
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ),
+                        // );
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,7 +134,7 @@ class _DokumenState extends State<Dokumen> {
                                   width: 75,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: Colors.grey,
+                                    color: Color.fromARGB(155, 224, 192, 192),
                                   ),
                                   child: Center(
                                       child: Row(

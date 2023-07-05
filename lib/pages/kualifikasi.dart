@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tias/components/Kualifikasi/PendidikanFormal.dart';
+import 'package:tias/components/Kualifikasi/RiwayatPekerjaan.dart';
 
 class Kualifikasi extends StatefulWidget {
   const Kualifikasi({super.key});
@@ -21,7 +23,7 @@ class _KualifikasiState extends State<Kualifikasi> {
             ),
             backgroundColor: HexColor("#FFFFFF"),
             title: Text(
-              "Kompetensi",
+              "Kualifikasi",
               style: TextStyle(
                   color: Colors.black,
                   fontFamily: "SF-Pro-Display",
@@ -32,7 +34,6 @@ class _KualifikasiState extends State<Kualifikasi> {
           body: Container(
             width: double.infinity,
             color: HexColor("#FFFFFF"),
-            padding: EdgeInsets.only(left: 12),
             child: Column(
               children: [
                 TabBar(
@@ -53,6 +54,10 @@ class _KualifikasiState extends State<Kualifikasi> {
                         text: ('Riwayat Pekerjaan'),
                       ),
                     ]),
+                Expanded(
+                    child: TabBarView(
+                  children: [PendidikanFormal(), RiwayatPekerjaan()],
+                ))
               ],
             ),
           )),

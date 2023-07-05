@@ -10,7 +10,8 @@ class PengujianMahasiswa extends StatefulWidget {
 
 class _PengujianMahasiswaState extends State<PengujianMahasiswa> {
   bool _sortNamaAscending = true;
-  bool _sortSemesterAscending = true;
+  bool _sortJenisAscending = true;
+  bool _sortKeteranganAscending = true;
   @override
   final List<Map<String, dynamic>> _listPengujianMahasiswa = [
     {
@@ -36,21 +37,49 @@ class _PengujianMahasiswaState extends State<PengujianMahasiswa> {
 
   void _sortSemester(bool ascending) {
     setState(() {
-      _sortSemesterAscending = ascending;
+      _sortJenisAscending = ascending;
       _listPengujianMahasiswa.sort((a, b) => ascending
-          ? a['semester'].compareTo(b['semester'])
-          : b['semester'].compareTo(a['semester']));
+          ? a['Jenis'].compareTo(b['Jenis'])
+          : b['Jenis'].compareTo(a['Jenis']));
     });
+  }
+
+  void _sortKeterangan(bool ascending) {
+    setState(() {
+      _sortKeteranganAscending = ascending;
+      _listPengujianMahasiswa.sort((a, b) => ascending
+          ? a['Keterangan'].compareTo(b['Keterangan'])
+          : b['Keterangan'].compareTo(a['Keterangan']));
+    });
+  }
+
+  List<Map<String, dynamic>> _foundName = [];
+  @override
+  initState() {
+    _foundName = _listPengujianMahasiswa;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 29, horizontal: 8),
-            child: Row(
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            // TextField(
+            //   onChanged: (value) => _runFilter(value),
+            //   decoration: const InputDecoration(
+            //       labelText: 'Search', suffixIcon: Icon(Icons.search)),
+            // ),
+            // const SizedBox(
+            //   height: 20,
+            // ),
+
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 InkWell(
@@ -76,11 +105,11 @@ class _PengujianMahasiswaState extends State<PengujianMahasiswa> {
                   ),
                 ),
                 InkWell(
-                  onTap: () => _sortSemester(!_sortSemesterAscending),
+                  onTap: () => _sortSemester(!_sortJenisAscending),
                   child: Row(
                     children: [
                       const Text(
-                        'Semester',
+                        'Jenis Pengujian',
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
@@ -89,7 +118,29 @@ class _PengujianMahasiswaState extends State<PengujianMahasiswa> {
                       ),
                       // the up/down arrow that indicates the sort order
                       Icon(
-                        _sortSemesterAscending
+                        _sortJenisAscending
+                            ? Icons.arrow_drop_down
+                            : Icons.arrow_drop_up,
+                        color: Colors.blue,
+                      ),
+                    ],
+                  ),
+                ),
+                InkWell(
+                  onTap: () => _sortKeterangan(!_sortKeteranganAscending),
+                  child: Row(
+                    children: [
+                      const Text(
+                        'Keterangan Aktivitas',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      // the up/down arrow that indicates the sort order
+                      Icon(
+                        _sortJenisAscending
                             ? Icons.arrow_drop_down
                             : Icons.arrow_drop_up,
                         color: Colors.blue,
@@ -99,239 +150,250 @@ class _PengujianMahasiswaState extends State<PengujianMahasiswa> {
                 ),
               ],
             ),
-          ),
-          // The list of products
-          Expanded(
-            child: ListView.builder(
-              itemCount: _listPengujianMahasiswa.length,
-              itemBuilder: (context, index) {
-                // the list item - product
-                return Container(
-                    padding: const EdgeInsets.all(20),
-                    margin:
-                        const EdgeInsets.only(bottom: 10, right: 15, left: 15),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-                          builder: (context) => Container(
-                            height: MediaQuery.of(context).size.height * 0.55,
-                            decoration: new BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: new BorderRadius.only(
-                                topLeft: const Radius.circular(25.0),
-                                topRight: const Radius.circular(25.0),
-                              ),
-                            ),
-                            child: Container(
-                              margin:
-                                  EdgeInsets.only(top: 50, left: 18, right: 18),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                            'Judul Aktivitas Pembimbingan'),
-                                      ),
-                                      Expanded(
-                                        child: Text(':'),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listPengujianMahasiswa[index]['Nama']}'),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text('Lokasi Kegiatan'),
-                                      ),
-                                      Expanded(
-                                        child: Text(':'),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listPengujianMahasiswa[index]['Lokasi Kegiatan']}'),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text('Nomor SK Penugasan'),
-                                      ),
-                                      Expanded(
-                                        child: Text(':'),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listPengujianMahasiswa[index]['Nomor SK Penugasan']}'),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text('Tanggal SK Penugasan'),
-                                      ),
-                                      Expanded(
-                                        child: Text(':'),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listPengujianMahasiswa[index]['Tanggal SK Penugasan']}'),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text('Keterangan Aktivitas'),
-                                      ),
-                                      Expanded(
-                                        child: Text(':'),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listPengujianMahasiswa[index]['Keterangan']}'),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text('Jenis Bimbingan'),
-                                      ),
-                                      Expanded(
-                                        child: Text(':'),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listPengujianMahasiswa[index]['Jenis']}'),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text('Program Studi'),
-                                      ),
-                                      Expanded(
-                                        child: Text(':'),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listPengujianMahasiswa[index]['Program Studi']}'),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text('Semester'),
-                                      ),
-                                      Expanded(
-                                        child: Text(':'),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            '${_listPengujianMahasiswa[index]['Semester']}'),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text(
-                            '${_listPengujianMahasiswa[index]['Nama']}',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: 16.0, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            '${_listPengujianMahasiswa[index]['Jenis']}',
-                            style: const TextStyle(
-                              fontFamily: 'Poppins',
-                              fontSize: 12.0,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text("Keterangan Aktivitas :"),
-                          Text(
-                            '${_listPengujianMahasiswa[index]['Keterangan']}',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ));
-              },
+            const SizedBox(
+              height: 20,
             ),
-          ),
-        ],
+            // The list of products
+            Expanded(
+              child: ListView.builder(
+                itemCount: _foundName.length,
+                itemBuilder: (context, index) {
+                  // the list item - product
+                  return Container(
+                      padding: const EdgeInsets.all(20),
+                      margin: const EdgeInsets.only(
+                          bottom: 10, right: 15, left: 15),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      child: InkWell(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            builder: (context) => Container(
+                              height: MediaQuery.of(context).size.height * 0.80,
+                              decoration: new BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: new BorderRadius.only(
+                                  topLeft: const Radius.circular(25.0),
+                                  topRight: const Radius.circular(25.0),
+                                ),
+                              ),
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                    top: 30, left: 18, right: 18),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                              'Judul Aktivitas Pembimbingan'),
+                                        ),
+                                        Expanded(
+                                          child: Text(':'),
+                                        ),
+                                        Expanded(
+                                          child:
+                                              Text(_foundName[index]['Nama']),
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          child: Text('Lokasi Kegiatan'),
+                                        ),
+                                        Expanded(
+                                          child: Text(':'),
+                                        ),
+                                        Expanded(
+                                          child: Text(_foundName[index]
+                                              ['Lokasi Kegiatan']),
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          child: Text('Nomor SK Penugasan'),
+                                        ),
+                                        Expanded(
+                                          child: Text(':'),
+                                        ),
+                                        Expanded(
+                                          child: Text(_foundName[index]
+                                              ['Nomor SK Penugasan']),
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          child: Text('Tanggal SK Penugasan'),
+                                        ),
+                                        Expanded(
+                                          child: Text(':'),
+                                        ),
+                                        Expanded(
+                                          child: Text(_foundName[index]
+                                              ['Tanggal SK Penugasan']),
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          child: Text('Keterangan Aktivitas'),
+                                        ),
+                                        Expanded(
+                                          child: Text(':'),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                              _foundName[index]['Keterangan']),
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          child: Text('Jenis Bimbingan'),
+                                        ),
+                                        Expanded(
+                                          child: Text(':'),
+                                        ),
+                                        Expanded(
+                                          child:
+                                              Text(_foundName[index]['Jenis']),
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          child: Text('Program Studi'),
+                                        ),
+                                        Expanded(
+                                          child: Text(':'),
+                                        ),
+                                        Expanded(
+                                          child: Text(_foundName[index]
+                                              ['Program Studi']),
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          child: Text('Semester'),
+                                        ),
+                                        Expanded(
+                                          child: Text(':'),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                              _foundName[index]['Semester']),
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              _foundName[index]['Nama'],
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: 16.0, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              _foundName[index]['Jenis'],
+                              style: const TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 12.0,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text("Keterangan Aktivitas :"),
+                            Text(
+                              _foundName[index]['Keterangan'],
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ));
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
